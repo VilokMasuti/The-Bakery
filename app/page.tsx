@@ -71,7 +71,7 @@ export default function HomePage() {
                 ) : (
                   /* Not logged in → sign up or sign in */
                   <>
-                    <Link href="/sign-up">
+                    <Link href="/signup">
                       <Button
                         size="lg"
                         className="bg-neutral-950 rounded-md hover:bg-neutral-800 text-white px-8 cursor-pointer duration-1000"
@@ -79,7 +79,7 @@ export default function HomePage() {
                         Get Started
                       </Button>
                     </Link>
-                    <Link href="/sign-in">
+                    <Link href="/signin">
                       <Button
                         size="lg"
                         variant="outline"

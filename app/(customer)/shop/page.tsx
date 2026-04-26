@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/sharerd/ProductCard"
 import { getCurrentProfile, getCurrentUser } from "@/lib/auth"
 import { getProducts } from "@/lib/db"
 import type { Product } from '@/lib/types'
+import Image from "next/image"
 import { Suspense, useEffect, useState } from 'react'
 
 const ShopContent = () => {
@@ -37,13 +38,17 @@ const ShopContent = () => {
 
   const categories = ['all', ...new Set(products.map((p) => p.category))]
   const filteredProducts = selectedCategory === 'all' ? products : products.filter((p) => p.category === selectedCategory)
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-[500px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading fresh baked goods...</p>
+          <Image
+            src="/young-baker-holding-some-bread-touching-transparent-screen.jpg"
+            alt="y"
+            width={500}   // fixed width
+            height={500}  // fixed height
+            className="object-cover rounded-md duration-1000 ease-in-out animate-pulse"
+          />
         </div>
       </div>
     )
@@ -56,8 +61,8 @@ const ShopContent = () => {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header Section */}
         <div className="mb-12">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">Shop</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight font-heading uppercase ">Shop</h2>
+          <p className="text-sm text-neutral-500 max-w-2xl">
             Fresh baked goods delivered to your door.
           </p>
         </div>
@@ -67,7 +72,7 @@ const ShopContent = () => {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded text-sm font-medium transition ${selectedCategory === cat
+              className={`px-3 cursor-pointer py-1.5 rounded text-sm font-medium transition ${selectedCategory === cat
                 ? 'bg-foreground text-background'
                 : 'border border-border text-foreground hover:bg-secondary'
                 }`}

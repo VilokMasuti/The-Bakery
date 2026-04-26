@@ -58,7 +58,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
         }
       }
 
-      // ✅ Fire event WITH userId
+      //  Fire event WITH userId
       window.dispatchEvent(
         new CustomEvent('cartUpdated', {
           detail: { userId: user.id }
@@ -88,17 +88,24 @@ export const ProductCard = ({ product }: { product: Product }) => {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-4xl">
-            🧁
+            <Image
+              src='/b.jpg'
+              alt={'b'}
+              fill
+              className=" object-cover group-hover:scale-105 transition-transform duration-300"
+              onError={() => setImageError(true)}
+
+            />
           </div>
         )}
 
         <div className="absolute top-3 right-3">
-          <span className={`px-2 py-1 text-xs font-medium rounded-full ${product.stock_quantity > 0
-            ? 'bg-green-100 text-green-800'
+          <span className={`px-2 py-1 text-xs font-medium rounded-md ${product.stock_quantity > 0
+            ? 'bg-neutral-50 shadow-md text-neutral-800'
             : 'bg-red-100 text-red-800'
             }`}>
             {product.stock_quantity > 0
-              ? `${product.stock_quantity} left`
+              ? `${product.stock_quantity} in stock`
               : 'Out of stock'
             }
           </span>
@@ -107,26 +114,26 @@ export const ProductCard = ({ product }: { product: Product }) => {
 
       <div className="p-5 space-y-4">
         <div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+          <h3 className="text-lg  uppercase font-heading font-bold text-zinc-950 mb-2 line-clamp-2">
             {product.name}
           </h3>
-          <p className="text-sm text-gray-600 line-clamp-2">
+          <p className="text-sm font-sans text-neutral-500 line-clamp-2">
             {product.description}
           </p>
         </div>
 
-        <span className="text-2xl font-bold text-amber-600">
+        <span className="text-2xl font-bold text-neutral-800">
           ${product.price.toFixed(2)}
         </span>
 
         <Button
           onClick={handleAddToCart}
           disabled={adding || added || product.stock_quantity === 0}
-          className={`w-full h-12 text-base font-semibold transition-all duration-200 ${added
-            ? 'bg-green-600 hover:bg-green-600 text-white'
+          className={`w-full h-11 text-base font-light  font-sora transition-all duration-1000 ${added
+            ? 'bg-green-700 rounded-md   text-white'
             : product.stock_quantity === 0
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-amber-600 hover:bg-amber-700 text-white'
+              ? ' cursor-not-allowed'
+              : 'bg-neutral-900 shadow-md rounded-md  cursor-pointer text-white'
             }`}
         >
           {added ? '✓ Added to Cart'

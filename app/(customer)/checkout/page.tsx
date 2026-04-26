@@ -1,5 +1,6 @@
 'use client'
 
+import { Navbar } from '@/components/sharerd/Navbar'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -7,8 +8,8 @@ import { Input } from '@/components/ui/input'
 import { addOrderItems, clearCart, createOrder, getCartItems } from '@/lib/db'
 import { createSupabaseClient, supabase } from '@/lib/supabase/supabase'
 import type { CartItemWithProduct } from '@/lib/types'
-import { AlertCircle, ArrowLeft, CheckCircle } from 'lucide-react'
-import Link from 'next/link'
+import { AlertCircle, CheckCircle } from 'lucide-react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState } from 'react'
 
@@ -134,34 +135,36 @@ function CheckoutContent() {
     }
   }
 
+
+
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-[500px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading checkout...</p>
+          <Image
+            src="/young-baker-holding-some-bread-touching-transparent-screen.jpg"
+            alt="y"
+            width={500}   // fixed width
+            height={500}  // fixed height
+            className="object-cover rounded-md duration-1000 ease-in-out animate-pulse"
+          />
         </div>
       </div>
     )
   }
 
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen ">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-amber-200 dark:border-amber-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
-          <Link href="/cart" className="p-2 hover:bg-amber-100 dark:hover:bg-amber-900 rounded-lg transition">
-            <ArrowLeft className="w-6 h-6 text-amber-900 dark:text-amber-100" />
-          </Link>
-          <h1 className="text-2xl font-bold text-amber-900 dark:text-amber-100">Checkout</h1>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Checkout Form */}
-          <div className="lg:col-span-2">
-            <Card className="border-amber-200 dark:border-amber-900">
+          <div className="lg:col-span-2 ">
+            <Card className=" shadow-md bg-white">
               <CardHeader>
                 <CardTitle>Delivery Information</CardTitle>
                 <CardDescription>Please provide your delivery details</CardDescription>
@@ -192,7 +195,8 @@ function CheckoutContent() {
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="John Doe"
                         disabled={submitting}
-                        className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+
+                        className=' rounded-md   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none  '
                       />
                     </div>
 
@@ -204,7 +208,8 @@ function CheckoutContent() {
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="you@example.com"
                         disabled={submitting}
-                        className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+
+                        className=' rounded-md   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none  '
                       />
                     </div>
                   </div>
@@ -216,7 +221,8 @@ function CheckoutContent() {
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="123 Main Street"
                       disabled={submitting}
-                      className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+
+                      className=' rounded-md   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none  '
                     />
                   </div>
 
@@ -228,7 +234,8 @@ function CheckoutContent() {
                         onChange={(e) => setCity(e.target.value)}
                         placeholder="New York"
                         disabled={submitting}
-                        className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+
+                        className=' rounded-md   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none  '
                       />
                     </div>
 
@@ -239,7 +246,8 @@ function CheckoutContent() {
                         onChange={(e) => setZipCode(e.target.value)}
                         placeholder="10001"
                         disabled={submitting}
-                        className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+
+                        className=' rounded-md   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none  '
                       />
                     </div>
                   </div>
@@ -252,14 +260,14 @@ function CheckoutContent() {
                       placeholder="e.g., No nuts, gluten-free options, etc."
                       rows={4}
                       disabled={submitting}
-                      className="w-full px-3 py-2 border border-amber-200 dark:border-amber-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-slate-800 dark:text-white"
+                      className="w-full px-3 py-2   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                     />
                   </div>
 
                   <Button
                     type="submit"
                     disabled={submitting}
-                    className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 h-auto"
+                    className=" cursor-pointer  font-sora rounded-md bg-black text-white shadow-md border-0 outline-none ring-0 hover:bg-neutral-800 duration-1000 hover:border-0 hover:ring-0 hover:outline-none focus:bg-neutral-50 focus:border-0 focus:ring-0 focus:outline-none py-2 h-auto"
                   >
                     {submitting ? 'Placing Order...' : 'Place Order'}
                   </Button>
@@ -270,7 +278,8 @@ function CheckoutContent() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-24 border-amber-200 dark:border-amber-900">
+            <Card className="bg-white shadow-md rounded-md">
+
               <CardHeader>
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>
@@ -301,8 +310,8 @@ function CheckoutContent() {
 
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-semibold text-lg">Total</span>
-                    <span className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+                    <span className=" font-sans text-sm">Total - </span>
+                    <span className="text-2xl text-black">
                       ${total.toFixed(2)}
                     </span>
                   </div>
@@ -318,7 +327,19 @@ function CheckoutContent() {
 
 export default function CheckoutPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div></div>}>
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[500px]">
+        <div className="text-center">
+          <Image
+            src="/young-baker-holding-some-bread-touching-transparent-screen.jpg"
+            alt="y"
+            width={500}   // fixed width
+            height={500}  // fixed height
+            className="object-cover rounded-md duration-1000 ease-in-out animate-pulse"
+          />
+        </div>
+      </div>
+    }>
       <CheckoutContent />
     </Suspense>
   )

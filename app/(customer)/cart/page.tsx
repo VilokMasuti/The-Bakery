@@ -1,10 +1,11 @@
 'use client'
 
+import { Navbar } from '@/components/sharerd/Navbar'
 import { Button } from '@/components/ui/button'
 import { getCartItems, removeCartItem, updateCartItem } from '@/lib/db'
 import { createSupabaseClient } from '@/lib/supabase/supabase'
 import type { CartItemWithProduct } from '@/lib/types'
-import { ArrowLeft, Minus, Plus, Trash2 } from 'lucide-react'
+import { Minus, Plus, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -64,26 +65,25 @@ function CartContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-[500px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading your cart...</p>
+          <Image
+            src="/young-baker-holding-some-bread-touching-transparent-screen.jpg"
+            alt="y"
+            width={500}   // fixed width
+            height={500}  // fixed height
+            className="object-cover rounded-md duration-1000 ease-in-out animate-pulse"
+          />
         </div>
       </div>
     )
   }
 
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
-          <Link href="/shop" className="p-2 hover:bg-secondary rounded transition">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <h1 className="text-2xl font-bold tracking-tight">Cart</h1>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {cartItems.length === 0 ? (
@@ -91,19 +91,19 @@ function CartContent() {
             <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
             <p className="text-muted-foreground mb-6">Start by adding some fresh baked goods</p>
             <Link href="/shop">
-              <Button>Continue Shopping</Button>
+              <Button className=' rounded-md'>Continue Shopping</Button>
             </Link>
           </div>
         ) : (
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Cart Items */}
             <div className="lg:col-span-2">
-              <div className="border border-border rounded-lg p-6">
+              <div className=" shadow-md border border-border rounded-lg p-6">
                 <h2 className="font-semibold mb-6">{cartItems.length} item{cartItems.length !== 1 ? 's' : ''} in cart</h2>
                 <div className="space-y-4">
                   {cartItems.map((item) => (
-                    <div key={item.id} className="flex gap-4 pb-4 border-b border-border last:border-b-0 last:pb-0">
-                      <div className="relative w-20 h-20 bg-secondary rounded flex-shrink-0">
+                    <div key={item.id} className="flex gap-4 pb-4 border-b border-border shadow-md p-2 last:border-b-0 last:pb-0">
+                      <div className="relative ml-2.5 w-20 h-20 bg-secondary rounded shrink-0">
                         {item.products.image_url ? (
                           <Image
                             src={item.products.image_url}
@@ -112,7 +112,16 @@ function CartContent() {
                             className="object-cover rounded-lg"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-2xl">🧁</div>
+                          <div className="w-full h-full flex items-center justify-center text-2xl">
+                            <Image
+                              src='/b.jpg'
+                              alt={'b'}
+                              fill
+                              className=" object-cover group-hover:scale-105 transition-transform duration-300"
+
+
+                            />
+                          </div>
                         )}
                       </div>
 
@@ -159,7 +168,7 @@ function CartContent() {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="sticky top-24 border border-border rounded-lg p-6">
+              <div className="sticky top-24 shadow-md border border-border rounded-lg p-6">
                 <h2 className="font-semibold mb-4">Summary</h2>
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-muted-foreground text-sm">
@@ -183,13 +192,13 @@ function CartContent() {
 
                 <div className="space-y-2">
                   <Link href="/checkout" className="block">
-                    <Button className="w-full">
+                    <Button className="w-full rounded-md cursor-pointer">
                       Checkout
                     </Button>
                   </Link>
 
                   <Link href="/shop" className="block">
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full rounded-md cursor-pointer">
                       Continue Shopping
                     </Button>
                   </Link>
