@@ -5,14 +5,16 @@ import { Card, CardContent } from '@/components/ui/card'
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from '@/components/ui/select'
 import { getAllOrders, updateOrderStatus } from '@/lib/db'
 import { createSupabaseClient } from '@/lib/supabase/supabase'
 import type { Order } from '@/lib/types'
 import { ArrowLeft } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState } from 'react'
@@ -62,7 +64,7 @@ function OrdersContent() {
 
   const statusColors: Record<string, string> = {
     pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-    confirmed: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+    confirmed: 'bg-green-600  text-white ',
     baking: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
     out_for_delivery: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
     delivered: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
@@ -73,24 +75,29 @@ function OrdersContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-[500px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading orders...</p>
+          <Image
+            src="/young-baker-holding-some-bread-talking-mobile.jpg"
+            alt="y"
+            width={500}   // fixed width
+            height={500}  // fixed height
+            className="object-cover rounded-md duration-1000 ease-in-out animate-pulse"
+          />
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-amber-200 dark:border-amber-900">
+      <header className="sticky top-0 z-50 backdrop-blur border-b ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
-          <Link href="/admin" className="p-2 hover:bg-amber-100 dark:hover:bg-amber-900 rounded-lg transition">
-            <ArrowLeft className="w-6 h-6 text-amber-900 dark:text-amber-100" />
+          <Link href="/admin" className="p-2 ">
+            <ArrowLeft className="w-6 h-6 " />
           </Link>
-          <h1 className="text-2xl font-bold text-amber-900 dark:text-amber-100">Manage Orders</h1>
+          <h1 className="text-2xl  font-heading ">Manage Orders</h1>
         </div>
       </header>
 
@@ -102,15 +109,15 @@ function OrdersContent() {
         ) : (
           <div className="space-y-4">
             {orders.map((order) => (
-              <Card key={order.id} className="border-amber-200 dark:border-amber-900">
+              <Card key={order.id} className="bg-white shadow-md">
                 <CardContent className="pt-6">
                   <div className="space-y-4">
                     <div className="grid md:grid-cols-4 gap-4 items-start">
                       <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mb-1">
+                        <p className="text-xs text-gray-500  uppercase font-semibold mb-1">
                           Order ID
                         </p>
-                        <p className="font-mono text-sm font-bold text-amber-900 dark:text-amber-100">
+                        <p className=" font-sans font-medium text-sm ">
                           {order.id.slice(0, 8).toUpperCase()}
                         </p>
                       </div>
@@ -119,7 +126,7 @@ function OrdersContent() {
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mb-1">
                           Customer
                         </p>
-                        <p className="font-semibold text-gray-900 dark:text-gray-100">{order.customer_name}</p>
+                        <p className="font-semibold uppercase text-xs text-gray-900 0">{order.customer_name}</p>
                       </div>
 
                       <div>
@@ -135,7 +142,7 @@ function OrdersContent() {
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mb-1">
                           Total
                         </p>
-                        <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+                        <p className="text-2xl font-bold ">
                           ${order.total_amount.toFixed(2)}
                         </p>
                       </div>
@@ -164,7 +171,7 @@ function OrdersContent() {
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold mb-2">
                           Status
                         </p>
-                        <Badge className={statusColors[order.status] || ''}>
+                        <Badge className={`${statusColors[order.status]} rounded-md p-2`}>
                           {order.status.replace(/_/g, ' ').charAt(0).toUpperCase() + order.status.replace(/_/g, ' ').slice(1)}
                         </Badge>
                       </div>
@@ -175,15 +182,21 @@ function OrdersContent() {
                           onValueChange={(value) => handleStatusChange(order.id, value as Order['status'])}
                           disabled={updating === order.id}
                         >
-                          <SelectTrigger className="w-40 border-amber-200 dark:border-amber-900">
+
+                          <SelectTrigger className="w-40 rounded-md shadow-md">
+
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            {statusOptions.map((status) => (
-                              <SelectItem key={status} value={status}>
-                                {status.replace(/_/g, ' ').charAt(0).toUpperCase() + status.replace(/_/g, ' ').slice(1)}
-                              </SelectItem>
-                            ))}
+                            <SelectGroup>
+
+                              {statusOptions.map((status) => (
+                                <SelectItem key={status} value={status}>
+                                  {status.replace(/_/g, ' ').charAt(0).toUpperCase() + status.replace(/_/g, ' ').slice(1)}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+
                           </SelectContent>
                         </Select>
                       </div>

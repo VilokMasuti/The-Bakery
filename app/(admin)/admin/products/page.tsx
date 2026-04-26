@@ -2,7 +2,7 @@
 
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { createProduct, deleteProduct, getAllProductsAdmin, updateProduct } from '@/lib/db'
@@ -153,41 +153,46 @@ function ProductsContent() {
     }
     setDeleting(null)
   }
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-[500px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading products...</p>
+          <Image
+            src="/young-baker-holding-some-bread-talking-mobile.jpg"
+            alt="y"
+            width={500}   // fixed width
+            height={500}  // fixed height
+            className="object-cover rounded-md duration-1000 ease-in-out animate-pulse"
+          />
         </div>
       </div>
     )
   }
 
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-white ">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-amber-200 dark:border-amber-900">
+      <header className="sticky top-0 z-50  backdrop-blur border-b  ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link href="/admin" className="p-2 hover:bg-amber-100 dark:hover:bg-amber-900 rounded-lg transition">
-              <ArrowLeft className="w-6 h-6 text-amber-900 dark:text-amber-100" />
+            <Link href="/admin" className="p-2">
+              <ArrowLeft className="w-6 h-6 " />
             </Link>
-            <h1 className="text-2xl font-bold text-amber-900 dark:text-amber-100">Manage Products</h1>
+            <h1 className="text-2xl font-heading">Manage Products</h1>
           </div>
 
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button onClick={() => handleOpenDialog()} className="bg-amber-600 hover:bg-amber-700 text-white">
+              <Button onClick={() => handleOpenDialog()} className=" rounded-md p-2 cursor-pointer text-white">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Product
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg border-amber-200 dark:border-amber-900">
+            <DialogContent className="max-w-lg shadow-md">
               <DialogHeader>
-                <DialogTitle>{editingId ? 'Edit Product' : 'Add New Product'}</DialogTitle>
-                <DialogDescription>Fill in the details below</DialogDescription>
+                <DialogTitle className=' '>{editingId ? 'Edit Product' : 'Add New Product'}</DialogTitle>
+                <DialogDescription className=' text-sm text-neutral-500'>Fill in the details below</DialogDescription>
               </DialogHeader>
 
               <form onSubmit={handleSubmit} className="space-y-4 max-h-96 overflow-y-auto pr-4">
@@ -210,7 +215,7 @@ function ProductsContent() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g., Chocolate Cake"
-                    className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                    className=" rounded-md bg-neutral-50   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                   />
                 </div>
 
@@ -221,7 +226,7 @@ function ProductsContent() {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     placeholder="Describe your product"
                     rows={3}
-                    className="w-full px-3 py-2 border border-amber-200 dark:border-amber-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-slate-800 dark:text-white"
+                    className="w-full px-3 py-2  rounded-md  bg-neutral-50  shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-non"
                   />
                 </div>
 
@@ -234,7 +239,7 @@ function ProductsContent() {
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                       placeholder="9.99"
-                      className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                      className="rounded-md  bg-neutral-50  shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-non"
                     />
                   </div>
 
@@ -245,7 +250,7 @@ function ProductsContent() {
                       value={formData.stock_quantity}
                       onChange={(e) => setFormData({ ...formData, stock_quantity: e.target.value })}
                       placeholder="10"
-                      className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                      className="rounded-md  bg-neutral-50  shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-non "
                     />
                   </div>
                 </div>
@@ -255,7 +260,7 @@ function ProductsContent() {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-amber-200 dark:border-amber-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-slate-800 dark:text-white"
+                    className="w-full px-3 py-2 rounded-md  bg-neutral-50  shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-non"
                   >
                     <option value="cakes">Cakes</option>
                     <option value="pastries">Pastries</option>
@@ -271,7 +276,7 @@ function ProductsContent() {
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
                     placeholder="https://example.com/image.jpg"
-                    className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                    className="rounded-md  bg-neutral-50  shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-non"
                   />
                 </div>
 
@@ -288,7 +293,7 @@ function ProductsContent() {
                   </label>
                 </div>
 
-                <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold">
+                <Button type="submit" className=" rounded-md cursor-pointer text-white font-semibold">
                   {editingId ? 'Update Product' : 'Create Product'}
                 </Button>
               </form>
@@ -303,7 +308,7 @@ function ProductsContent() {
             <p className="text-gray-600 dark:text-gray-400 mb-6">No products yet. Add your first product!</p>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button onClick={() => handleOpenDialog()} className="bg-amber-600 hover:bg-amber-700 text-white">
+                <Button onClick={() => handleOpenDialog()} className=" rounded-md text-white">
                   <Plus className="w-4 h-4 mr-2" />
                   Add First Product
                 </Button>
@@ -313,42 +318,51 @@ function ProductsContent() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
-              <Card key={product.id} className="border-amber-200 dark:border-amber-900">
-                <div className="relative w-full h-40 bg-gray-200 dark:bg-gray-800 rounded-t-lg overflow-hidden">
+              <div key={product.id} className="group relative bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ">
+                <div className="relative w-full  h-52 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden shadow-md">
                   {product.image_url && !imageErrors.has(product.id) ? (
                     <Image
                       src={product.image_url}
                       alt={product.name}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300 "
                       onError={() => setImageErrors(prev => new Set([...prev, product.id]))}
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-3xl">🧁</div>
+                    <div className="w-full h-full flex items-center justify-center text-3xl">
+                      <Image
+                        src='/b.jpg'
+                        alt={'b'}
+                        fill
+                        className=" object-cover group-hover:scale-105 transition-transform duration-300"
+
+
+                      />
+                    </div>
                   )}
                 </div>
-                <CardHeader>
-                  <CardTitle className="text-lg text-amber-900 dark:text-amber-100">{product.name}</CardTitle>
+                <CardHeader className=' mt-3'>
+                  <CardTitle className="text-lg font-heading text-neutral-900 dark:text-amber-100">{product.name}</CardTitle>
                   <CardDescription className="text-xs">{product.category}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+                    <span className="text-2xl  font-bold text-neutral-900 dark:text-amber-400">
                       ${product.price.toFixed(2)}
                     </span>
-                    <span className="text-xs bg-amber-100 dark:bg-amber-900 text-amber-900 dark:text-amber-100 px-2 py-1 rounded">
+                    <span className="text-xs  px-2 py-1  shadow-md rounded-md">
                       Stock: {product.stock_quantity}
                     </span>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 p-3">
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
                           onClick={() => handleOpenDialog(product)}
                           size="sm"
                           variant="outline"
-                          className="flex-1 border-amber-200 dark:border-amber-900"
+                          className="flex-1  shadow-mauve-50 cursor-pointer rounded-md"
                         >
                           <Edit2 className="w-4 h-4 mr-1" />
                           Edit
@@ -380,7 +394,7 @@ function ProductsContent() {
                               value={formData.name}
                               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                               placeholder="e.g., Chocolate Cake"
-                              className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                              className="rounded-md bg-neutral-50   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                             />
                           </div>
 
@@ -391,7 +405,7 @@ function ProductsContent() {
                               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                               placeholder="Describe your product"
                               rows={3}
-                              className="w-full px-3 py-2 border border-amber-200 dark:border-amber-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-slate-800 dark:text-white"
+                              className="w-full px-3 py-2  rounded-md bg-neutral-50   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                             />
                           </div>
 
@@ -404,7 +418,7 @@ function ProductsContent() {
                                 value={formData.price}
                                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                                 placeholder="9.99"
-                                className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                                className="rounded-md bg-neutral-50   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                               />
                             </div>
 
@@ -415,7 +429,7 @@ function ProductsContent() {
                                 value={formData.stock_quantity}
                                 onChange={(e) => setFormData({ ...formData, stock_quantity: e.target.value })}
                                 placeholder="10"
-                                className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                                className="rounded-md bg-neutral-50   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                               />
                             </div>
                           </div>
@@ -425,7 +439,7 @@ function ProductsContent() {
                             <select
                               value={formData.category}
                               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                              className="w-full px-3 py-2 border border-amber-200 dark:border-amber-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-slate-800 dark:text-white"
+                              className="w-full px-3 py-2 rounded-md bg-neutral-50   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                             >
                               <option value="cakes">Cakes</option>
                               <option value="pastries">Pastries</option>
@@ -441,7 +455,7 @@ function ProductsContent() {
                               value={formData.image_url}
                               onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
                               placeholder="https://example.com/image.jpg"
-                              className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                              className="rounded-md bg-neutral-50   shadow-md   !border-0 !ring-0 !outline-none focus:!border-0 focus:!ring-0 focus:!outline-none"
                             />
                           </div>
 
@@ -458,7 +472,7 @@ function ProductsContent() {
                             </label>
                           </div>
 
-                          <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold">
+                          <Button type="submit" className="  rounded-md cursor-pointer text-white font-semibold">
                             Update Product
                           </Button>
                         </form>
@@ -469,15 +483,15 @@ function ProductsContent() {
                       onClick={() => handleDelete(product.id)}
                       disabled={deleting === product.id}
                       size="sm"
-                      variant="destructive"
-                      className="flex-1"
+
+                      className="flex-1 rounded-md cursor-pointer bg-black"
                     >
                       <Trash2 className="w-4 h-4 mr-1" />
                       Delete
                     </Button>
                   </div>
                 </CardContent>
-              </Card>
+              </div>
             ))}
           </div>
         )}

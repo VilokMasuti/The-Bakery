@@ -201,14 +201,14 @@ export function Navbar() {
                 </>
               ) : (
                 <div className="flex items-center gap-2">
-                  <Link href="/sign-in">
+                  <Link href="/signin">
                     <Button variant="ghost" size="sm"
                       className="font-heading font-light tracking-widest uppercase rounded-md duration-1000 cursor-pointer
                         text-black hover:bg-neutral-100 hover:text-neutral-900">
                       Sign in
                     </Button>
                   </Link>
-                  <Link href="/sign-up">
+                  <Link href="/signup">
                     <Button size="sm"
                       className="font-heading font-light tracking-widest uppercase rounded-md duration-1000 cursor-pointer
                         bg-neutral-950 hover:bg-neutral-800 text-white">
@@ -265,13 +265,13 @@ export function Navbar() {
                         ))
                       ) : (
                         <>
-                          <Link href="/sign-in" onClick={() => setMobileOpen(false)}
+                          <Link href="/signin" onClick={() => setMobileOpen(false)}
                             className="flex items-center px-3 py-2.5 text-sm
                               font-heading font-light tracking-widest rounded-sm uppercase
                               text-neutral-600 cursor-pointer hover:rounded-md hover:bg-neutral-50">
                             Sign In
                           </Link>
-                          <Link href="/sign-up" onClick={() => setMobileOpen(false)}
+                          <Link href="/signup" onClick={() => setMobileOpen(false)}
                             className="flex items-center px-3 py-2.5 rounded-md text-sm
                               font-heading font-light tracking-widest uppercase
                               text-neutral-600 hover:bg-neutral-50">

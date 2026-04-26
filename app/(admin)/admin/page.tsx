@@ -1,11 +1,12 @@
 'use client'
 
+import { Navbar } from '@/components/sharerd/Navbar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { supabase } from '@/lib/supabase/supabase'
 import type { Order, Product } from '@/lib/types'
-import { BarChart3, LogOut, Package, ShoppingBag } from 'lucide-react'
+import { BarChart3, Package, ShoppingBag } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -59,7 +60,7 @@ export default function AdminDashboard() {
     loadData()
   }, [router])
 
-  // ✅ Use the shared supabase instance
+  //  Use the shared supabase instance
   const handleLogout = async () => {
     await supabase.auth.signOut()
     window.location.href = '/'
@@ -67,8 +68,16 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600" />
+      <div className="flex items-center justify-center min-h-[500px]">
+        <div className="text-center">
+          <Image
+            src="/young-baker-holding-some-bread-talking-mobile.jpg"
+            alt="y"
+            width={500}   // fixed width
+            height={500}  // fixed height
+            className="object-cover rounded-md duration-1000 ease-in-out animate-pulse"
+          />
+        </div>
       </div>
     )
   }
@@ -90,32 +99,9 @@ export default function AdminDashboard() {
   const totalOrders = orders.length
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-heading font-light uppercase tracking-widest text-stone-900">
-            🥐 Admin Dashboard
-          </h1>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                {profile?.full_name || 'Admin'}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={handleLogout}
-                className="text-red-600 cursor-pointer"
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
@@ -124,10 +110,10 @@ export default function AdminDashboard() {
         <div className="grid md:grid-cols-4 gap-6 mb-12">
 
           {/* Total Products */}
-          <Card>
+          <Card className=' bg-white'>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total Products</CardTitle>
-              <Package className="h-4 w-4 text-amber-600" />
+              <Package className="h-4 w-4 duration-1000 ease-in-out animate-spin text-stone-500 shadow-md" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{products.length}</div>
@@ -136,10 +122,10 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Total Orders */}
-          <Card>
+          <Card className='bg-white'>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-              <ShoppingBag className="h-4 w-4 text-blue-600" />
+              <ShoppingBag className="h-4 w-4 text-neutral-900" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{totalOrders}</div>
@@ -148,13 +134,13 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Pending Orders */}
-          <Card>
+          <Card className='bg-white'>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Pending Orders</CardTitle>
-              <ShoppingBag className="h-4 w-4 text-orange-600" />
+              <ShoppingBag className="h-4 w-4 text-neutral-900" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-orange-600">
+              <div className="text-2xl font-bold text-zinc-800">
                 {pendingOrders}
               </div>
               <p className="text-xs text-stone-500">Awaiting confirmation</p>
@@ -162,7 +148,7 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Revenue */}
-          <Card>
+          <Card className='bg-white'>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
               <BarChart3 className="h-4 w-4 text-green-600" />
@@ -179,29 +165,29 @@ export default function AdminDashboard() {
 
         {/* Quick Actions */}
         <div className="grid md:grid-cols-2 gap-6">
-          <Card>
+          <Card className='bg-white'>
             <CardHeader>
               <CardTitle>Products Management</CardTitle>
               <CardDescription>Add, edit, and manage your bakery items</CardDescription>
             </CardHeader>
             <CardContent>
               <Link href="/admin/products">
-                <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
+                <Button className=" rounded-md cursor-pointer  text-white">
                   Manage Products
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className=' bg-white'>
             <CardHeader>
               <CardTitle>Orders Management</CardTitle>
               <CardDescription>View and update order statuses</CardDescription>
             </CardHeader>
             <CardContent>
               <Link href="/admin/orders">
-                <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
-                  Manage Orders
+                <Button className="  cursor-pointer rounded-md text-white">
+                  Management
                 </Button>
               </Link>
             </CardContent>
