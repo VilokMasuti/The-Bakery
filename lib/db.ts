@@ -152,7 +152,7 @@ export async function createOrder(userId: string, customerName: string, customer
 
     const { data } = await supabase
       .from('orders')
-      .insert([{ user_id: userId, customer_name: customerName, customer_email: customerEmail, delivery_address: deliveryAddress, subtotal, delivery_fee: deliveryFee, total_amount: totalAmount, special_instructions: specialInstructions }])
+      .insert([{ user_id: userId, customer_name: customerName, customer_email: customerEmail, delivery_address: deliveryAddress, subtotal, delivery_fee: deliveryFee, total_amount: totalAmount, special_instructions: specialInstructions, status: 'pending' }])
       .select()
       .single()
 

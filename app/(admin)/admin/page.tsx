@@ -40,6 +40,10 @@ export default function AdminDashboard() {
 
       setProfile(profileData)
 
+      loadOrdersAndProducts()
+    }
+
+    const loadOrdersAndProducts = async () => {
       // Load products
       const { data: productsData } = await supabase
         .from('products')
@@ -58,6 +62,27 @@ export default function AdminDashboard() {
     }
 
     loadData()
+
+    // Subscribe to real-time updates for orders
+    const ordersChannel = supabase
+      .channel('orders_changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => {
+        loadOrdersAndProducts()
+      })
+      .subscribe()
+
+    // Subscribe to real-time updates for products
+    const productsChannel = supabase
+      .channel('products_changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {
+        loadOrdersAndProducts()
+      })
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(ordersChannel)
+      supabase.removeChannel(productsChannel)
+    }
   }, [router])
 
   //  Use the shared supabase instance
@@ -93,7 +118,7 @@ export default function AdminDashboard() {
     .reduce((sum, o) => sum + o.total_amount, 0)
 
   const pendingOrders = orders.filter(
-    o => o.status?.toLowerCase() === 'pending'
+    o => !o.status || o.status?.toLowerCase() === 'pending'
   ).length
 
   const totalOrders = orders.length

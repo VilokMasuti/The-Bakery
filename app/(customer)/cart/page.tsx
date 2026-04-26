@@ -137,7 +137,7 @@ function CartContent() {
                           >
                             <Minus className="w-4 h-4" />
                           </button>
-                          <span className="px-3 py-1 border border-border rounded text-sm">{item.quantity}</span>
+                          <span className="px-3 py-1 mb-1 border border-border rounded text-sm">{item.quantity}</span>
                           <button
                             onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                             disabled={updating === item.id}

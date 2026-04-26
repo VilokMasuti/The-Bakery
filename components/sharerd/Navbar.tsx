@@ -126,13 +126,17 @@ export function Navbar() {
     },
   ]
 
+  const publicLinks: NavLink[] = [
+    { href: '/shop', label: 'Shop' },
+  ]
+
   const adminLinks: NavLink[] = [
     { href: '/admin', label: 'Dashboard' },
     { href: '/admin/products', label: 'Products' },
     { href: '/admin/orders', label: 'Orders' },
   ]
 
-  const navLinks = isAdminPage ? adminLinks : customerLinks
+  const navLinks = isAdminPage ? adminLinks : (user ? customerLinks : publicLinks)
 
   const linkClass = (href: string) =>
     `text-sm font-heading font-light tracking-widest uppercase transition-colors duration-200 px-3 py-1.5 rounded-md
@@ -142,7 +146,7 @@ export function Navbar() {
     }`
 
   return (
-    <nav className="w-full border-b border-stone-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <nav className="w-full border-b border-stone-100 bg-white backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
 
